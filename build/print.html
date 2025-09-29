@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    /* @page {
+        padding: 0;
+        margin: 0;
+    }
+
+    * {
+        padding: 0;
+        margin: 0;
+    } */
+</style>
+
+<body>
+</body>
+<script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on("print-edit", (event, obj) => {
+        let html = "";
+        html += `<div>${obj.html}</div>`;
+        if(obj.a4) document.body.innerHTML = `<style> @page {margin:16pt} </style> ${html}`;
+        else document.body.innerHTML = `<style> @page {margin:0} </style> ${html}`;
+        ipcRenderer.send('do', obj);
+    })
+
+</script>
+
+</html>
